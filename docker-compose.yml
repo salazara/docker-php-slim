@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  docker_php_slim_app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: docker_php_slim_app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/app
+    volumes:
+      - ./app:/var/www/app
+      - ./docker/app.conf:/etc/apache2/sites-enabled/000-default.conf
+    ports:
+      - 8000:80
+    networks:
+      - docker_php_slim_network
+
+networks:
+  docker_php_slim_network:
+    driver: bridge
